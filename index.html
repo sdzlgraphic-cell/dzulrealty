@@ -1,1046 +1,952 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Dzul Realty — Terrenos & Lotes en Venta</title>
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Jost:wght@200;300;400;500&display=swap" rel="stylesheet" />
-  <style>
-    :root {
-      --black: #0c0c0c;
-      --black-soft: #141414;
-      --champagne: #c9a96e;
-      --champagne-light: #e8d5b0;
-      --champagne-dark: #a07d44;
-      --white: #f5f0ea;
-      --gray: #6b6560;
-    }
-
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-    html { scroll-behavior: smooth; }
-
-    body {
-      background: var(--black);
-      color: var(--white);
-      font-family: 'Jost', sans-serif;
-      font-weight: 300;
-      overflow-x: hidden;
-    }
-
-    /* ── NAV ─────────────────────────────────────── */
-    nav {
-      position: fixed;
-      top: 0; left: 0; right: 0;
-      z-index: 100;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 28px 60px;
-      background: linear-gradient(to bottom, rgba(12,12,12,0.95), transparent);
-      transition: background 0.4s;
-    }
-
-    nav.scrolled {
-      background: rgba(12,12,12,0.97);
-      padding: 20px 60px;
-      border-bottom: 1px solid rgba(201,169,110,0.15);
-    }
-
-    .logo {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 1.6rem;
-      font-weight: 600;
-      letter-spacing: 0.08em;
-      color: var(--white);
-      text-decoration: none;
-    }
-
-    .logo span { color: var(--champagne); }
-
-    .nav-links {
-      display: flex;
-      gap: 42px;
-      list-style: none;
-    }
-
-    .nav-links a {
-      color: rgba(245,240,234,0.7);
-      text-decoration: none;
-      font-size: 0.78rem;
-      letter-spacing: 0.18em;
-      text-transform: uppercase;
-      transition: color 0.3s;
-    }
-
-    .nav-links a:hover { color: var(--champagne); }
-
-    .nav-cta {
-      background: transparent;
-      border: 1px solid var(--champagne);
-      color: var(--champagne) !important;
-      padding: 10px 24px;
-      border-radius: 0;
-      transition: background 0.3s, color 0.3s !important;
-    }
-
-    .nav-cta:hover {
-      background: var(--champagne) !important;
-      color: var(--black) !important;
-    }
-
-    /* ── HERO ────────────────────────────────────── */
-    #hero {
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      position: relative;
-      overflow: hidden;
-      padding: 0 60px;
-    }
-
-    .hero-bg {
-      position: absolute;
-      inset: 0;
-      background:
-        radial-gradient(ellipse 80% 60% at 70% 50%, rgba(201,169,110,0.07) 0%, transparent 60%),
-        radial-gradient(ellipse 40% 40% at 20% 80%, rgba(201,169,110,0.04) 0%, transparent 50%);
-    }
-
-    .hero-grid-lines {
-      position: absolute;
-      inset: 0;
-      background-image:
-        linear-gradient(rgba(201,169,110,0.04) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(201,169,110,0.04) 1px, transparent 1px);
-      background-size: 80px 80px;
-      mask-image: radial-gradient(ellipse 90% 80% at 60% 50%, black 40%, transparent 100%);
-    }
-
-    .hero-content {
-      position: relative;
-      max-width: 900px;
-      animation: fadeUp 1.2s cubic-bezier(0.16, 1, 0.3, 1) both;
-    }
-
-    .hero-tag {
-      font-size: 0.72rem;
-      letter-spacing: 0.3em;
-      text-transform: uppercase;
-      color: var(--champagne);
-      margin-bottom: 28px;
-      display: flex;
-      align-items: center;
-      gap: 14px;
-    }
-
-    .hero-tag::before {
-      content: '';
-      display: block;
-      width: 40px;
-      height: 1px;
-      background: var(--champagne);
-    }
-
-    h1 {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: clamp(3.5rem, 8vw, 7rem);
-      font-weight: 300;
-      line-height: 1.05;
-      letter-spacing: -0.01em;
-      margin-bottom: 32px;
-    }
-
-    h1 em {
-      font-style: italic;
-      color: var(--champagne);
-    }
-
-    .hero-sub {
-      font-size: 1rem;
-      color: rgba(245,240,234,0.55);
-      max-width: 480px;
-      line-height: 1.8;
-      margin-bottom: 52px;
-      letter-spacing: 0.02em;
-    }
-
-    .hero-actions {
-      display: flex;
-      gap: 20px;
-      align-items: center;
-    }
-
-    .btn-primary {
-      background: var(--champagne);
-      color: var(--black);
-      padding: 16px 40px;
-      font-family: 'Jost', sans-serif;
-      font-size: 0.78rem;
-      font-weight: 500;
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
-      text-decoration: none;
-      transition: background 0.3s, transform 0.2s;
-      display: inline-block;
-    }
-
-    .btn-primary:hover {
-      background: var(--champagne-light);
-      transform: translateY(-2px);
-    }
-
-    .btn-ghost {
-      color: var(--white);
-      font-size: 0.78rem;
-      letter-spacing: 0.15em;
-      text-transform: uppercase;
-      text-decoration: none;
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      opacity: 0.7;
-      transition: opacity 0.3s;
-    }
-
-    .btn-ghost:hover { opacity: 1; }
-
-    .btn-ghost svg { transition: transform 0.3s; }
-    .btn-ghost:hover svg { transform: translateX(5px); }
-
-    .hero-stats {
-      position: absolute;
-      right: 60px;
-      bottom: 80px;
-      display: flex;
-      flex-direction: column;
-      gap: 32px;
-      animation: fadeUp 1.4s 0.3s cubic-bezier(0.16, 1, 0.3, 1) both;
-    }
-
-    .stat {
-      text-align: right;
-    }
-
-    .stat-num {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 2.8rem;
-      font-weight: 300;
-      color: var(--champagne);
-      line-height: 1;
-    }
-
-    .stat-label {
-      font-size: 0.68rem;
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
-      color: rgba(245,240,234,0.4);
-      margin-top: 6px;
-    }
-
-    .hero-scroll {
-      position: absolute;
-      bottom: 40px;
-      left: 60px;
-      display: flex;
-      align-items: center;
-      gap: 14px;
-      font-size: 0.68rem;
-      letter-spacing: 0.25em;
-      text-transform: uppercase;
-      color: rgba(245,240,234,0.35);
-      animation: fadeUp 1.6s 0.5s cubic-bezier(0.16, 1, 0.3, 1) both;
-    }
-
-    .scroll-line {
-      width: 50px;
-      height: 1px;
-      background: rgba(201,169,110,0.4);
-      position: relative;
-      overflow: hidden;
-    }
-
-    .scroll-line::after {
-      content: '';
-      position: absolute;
-      left: -100%;
-      top: 0;
-      width: 100%;
-      height: 100%;
-      background: var(--champagne);
-      animation: slide 2s infinite;
-    }
-
-    /* ── SERVICES ────────────────────────────────── */
-    #servicios {
-      padding: 120px 60px;
-      position: relative;
-    }
-
-    .section-header {
-      display: flex;
-      align-items: flex-end;
-      justify-content: space-between;
-      margin-bottom: 80px;
-    }
-
-    .section-tag {
-      font-size: 0.7rem;
-      letter-spacing: 0.3em;
-      text-transform: uppercase;
-      color: var(--champagne);
-      margin-bottom: 16px;
-      display: flex;
-      align-items: center;
-      gap: 12px;
-    }
-
-    .section-tag::before {
-      content: '';
-      display: block;
-      width: 30px;
-      height: 1px;
-      background: var(--champagne);
-    }
-
-    h2 {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: clamp(2rem, 4vw, 3.5rem);
-      font-weight: 300;
-      line-height: 1.1;
-    }
-
-    h2 em { font-style: italic; color: var(--champagne); }
-
-    .section-line {
-      font-size: 0.78rem;
-      color: rgba(245,240,234,0.4);
-      max-width: 300px;
-      text-align: right;
-      line-height: 1.7;
-    }
-
-    .services-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 2px;
-    }
-
-    .service-card {
-      background: var(--black-soft);
-      padding: 50px 40px;
-      border: 1px solid rgba(201,169,110,0.08);
-      position: relative;
-      overflow: hidden;
-      transition: border-color 0.4s, background 0.4s;
-      cursor: default;
-    }
-
-    .service-card::before {
-      content: '';
-      position: absolute;
-      bottom: 0; left: 0;
-      width: 0; height: 2px;
-      background: var(--champagne);
-      transition: width 0.5s cubic-bezier(0.16, 1, 0.3, 1);
-    }
-
-    .service-card:hover { border-color: rgba(201,169,110,0.25); background: #181818; }
-    .service-card:hover::before { width: 100%; }
-
-    .service-num {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 3.5rem;
-      font-weight: 300;
-      color: rgba(201,169,110,0.12);
-      line-height: 1;
-      margin-bottom: 28px;
-      transition: color 0.4s;
-    }
-
-    .service-card:hover .service-num { color: rgba(201,169,110,0.25); }
-
-    .service-icon {
-      width: 42px;
-      height: 42px;
-      margin-bottom: 24px;
-      color: var(--champagne);
-    }
-
-    .service-title {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 1.6rem;
-      font-weight: 400;
-      margin-bottom: 14px;
-    }
-
-    .service-desc {
-      font-size: 0.85rem;
-      color: rgba(245,240,234,0.45);
-      line-height: 1.8;
-    }
-
-    /* ── PROPIEDADES ─────────────────────────────── */
-    #propiedades {
-      padding: 120px 60px;
-      background: var(--black-soft);
-    }
-
-    .props-grid {
-      display: grid;
-      grid-template-columns: 1.4fr 1fr 1fr;
-      grid-template-rows: auto auto;
-      gap: 20px;
-      margin-top: 70px;
-    }
-
-    .prop-card {
-      background: var(--black);
-      border: 1px solid rgba(201,169,110,0.1);
-      overflow: hidden;
-      position: relative;
-      transition: border-color 0.4s, transform 0.4s;
-    }
-
-    .prop-card:hover { border-color: rgba(201,169,110,0.4); transform: translateY(-4px); }
-    .prop-card.featured { grid-row: 1 / 3; }
-
-    .prop-img {
-      width: 100%;
-      aspect-ratio: 4/3;
-      background: linear-gradient(135deg, #1a1a1a 0%, #222 50%, #1a1a1a 100%);
-      position: relative;
-      overflow: hidden;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-
-    .prop-card.featured .prop-img {
-      aspect-ratio: unset;
-      height: 380px;
-    }
-
-    .prop-img-icon {
-      opacity: 0.08;
-      color: var(--champagne);
-    }
-
-    .prop-badge {
-      position: absolute;
-      top: 18px; left: 18px;
-      background: var(--champagne);
-      color: var(--black);
-      font-size: 0.65rem;
-      font-weight: 500;
-      letter-spacing: 0.15em;
-      text-transform: uppercase;
-      padding: 5px 12px;
-    }
-
-    .prop-info {
-      padding: 24px 28px 28px;
-    }
-
-    .prop-location {
-      font-size: 0.68rem;
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
-      color: var(--champagne);
-      margin-bottom: 8px;
-    }
-
-    .prop-name {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 1.35rem;
-      font-weight: 400;
-      margin-bottom: 10px;
-    }
-
-    .prop-card.featured .prop-name { font-size: 1.8rem; }
-
-    .prop-details {
-      display: flex;
-      gap: 20px;
-      font-size: 0.75rem;
-      color: rgba(245,240,234,0.4);
-      margin-bottom: 18px;
-    }
-
-    .prop-price {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 1.4rem;
-      color: var(--champagne);
-      font-weight: 300;
-    }
-
-    /* ── NOSOTROS ────────────────────────────────── */
-    #nosotros {
-      padding: 140px 60px;
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 100px;
-      align-items: center;
-    }
-
-    .about-visual {
-      position: relative;
-      height: 560px;
-    }
-
-    .about-img-main {
-      position: absolute;
-      top: 0; left: 0;
-      width: 80%;
-      height: 85%;
-      background: linear-gradient(135deg, #1c1c1c, #252525);
-      border: 1px solid rgba(201,169,110,0.1);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-
-    .about-img-accent {
-      position: absolute;
-      bottom: 0; right: 0;
-      width: 55%;
-      height: 45%;
-      background: rgba(201,169,110,0.06);
-      border: 1px solid rgba(201,169,110,0.15);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-
-    .about-accent-line {
-      position: absolute;
-      top: 50%; left: -30px;
-      transform: translateY(-50%);
-      width: 60px;
-      height: 1px;
-      background: var(--champagne);
-    }
-
-    .about-text p {
-      font-size: 0.9rem;
-      color: rgba(245,240,234,0.55);
-      line-height: 1.9;
-      margin-bottom: 20px;
-    }
-
-    .about-values {
-      margin-top: 50px;
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 28px;
-    }
-
-    .value-item {
-      border-top: 1px solid rgba(201,169,110,0.2);
-      padding-top: 18px;
-    }
-
-    .value-title {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 1.1rem;
-      margin-bottom: 6px;
-      color: var(--champagne-light);
-    }
-
-    .value-desc {
-      font-size: 0.78rem;
-      color: rgba(245,240,234,0.4);
-      line-height: 1.7;
-    }
-
-    /* ── CONTACTO ────────────────────────────────── */
-    #contacto {
-      padding: 140px 60px;
-      background: var(--black-soft);
-      position: relative;
-      overflow: hidden;
-    }
-
-    .contact-bg {
-      position: absolute;
-      inset: 0;
-      background: radial-gradient(ellipse 60% 70% at 90% 50%, rgba(201,169,110,0.05), transparent);
-    }
-
-    .contact-inner {
-      position: relative;
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 100px;
-      align-items: start;
-    }
-
-    .contact-form {
-      display: flex;
-      flex-direction: column;
-      gap: 20px;
-    }
-
-    .form-group {
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
-    }
-
-    .form-label {
-      font-size: 0.68rem;
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
-      color: rgba(245,240,234,0.4);
-    }
-
-    .form-input, .form-textarea {
-      background: transparent;
-      border: none;
-      border-bottom: 1px solid rgba(201,169,110,0.25);
-      color: var(--white);
-      padding: 12px 0;
-      font-family: 'Jost', sans-serif;
-      font-size: 0.9rem;
-      font-weight: 300;
-      outline: none;
-      transition: border-color 0.3s;
-      width: 100%;
-    }
-
-    .form-input:focus, .form-textarea:focus { border-color: var(--champagne); }
-    .form-textarea { resize: none; height: 100px; }
-
-    .form-input::placeholder, .form-textarea::placeholder {
-      color: rgba(245,240,234,0.2);
-    }
-
-    .contact-info {
-      padding-top: 10px;
-    }
-
-    .contact-info p {
-      font-size: 0.88rem;
-      color: rgba(245,240,234,0.5);
-      line-height: 1.9;
-      margin-bottom: 48px;
-    }
-
-    .contact-items {
-      display: flex;
-      flex-direction: column;
-      gap: 28px;
-    }
-
-    .contact-item {
-      display: flex;
-      align-items: flex-start;
-      gap: 18px;
-    }
-
-    .contact-item-icon {
-      color: var(--champagne);
-      margin-top: 2px;
-      flex-shrink: 0;
-    }
-
-    .contact-item-label {
-      font-size: 0.65rem;
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
-      color: rgba(245,240,234,0.35);
-      margin-bottom: 4px;
-    }
-
-    .contact-item-value {
-      font-size: 0.88rem;
-      color: rgba(245,240,234,0.75);
-    }
-
-    /* ── FOOTER ──────────────────────────────────── */
-    footer {
-      padding: 40px 60px;
-      border-top: 1px solid rgba(201,169,110,0.1);
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-    }
-
-    .footer-logo {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 1.2rem;
-      color: var(--white);
-    }
-
-    .footer-logo span { color: var(--champagne); }
-
-    .footer-copy {
-      font-size: 0.72rem;
-      color: rgba(245,240,234,0.25);
-      letter-spacing: 0.05em;
-    }
-
-    /* ── ANIMATIONS ──────────────────────────────── */
-    @keyframes fadeUp {
-      from { opacity: 0; transform: translateY(30px); }
-      to   { opacity: 1; transform: translateY(0); }
-    }
-
-    @keyframes slide {
-      0%   { left: -100%; }
-      100% { left: 100%; }
-    }
-
-    .reveal {
-      opacity: 0;
-      transform: translateY(28px);
-      transition: opacity 0.8s cubic-bezier(0.16,1,0.3,1), transform 0.8s cubic-bezier(0.16,1,0.3,1);
-    }
-
-    .reveal.visible {
-      opacity: 1;
-      transform: none;
-    }
-
-    /* ── RESPONSIVE ──────────────────────────────── */
-    @media (max-width: 900px) {
-      nav { padding: 22px 28px; }
-      nav.scrolled { padding: 16px 28px; }
-      .nav-links { display: none; }
-      #hero, #servicios, #propiedades, #nosotros, #contacto { padding-left: 28px; padding-right: 28px; }
-      .services-grid { grid-template-columns: 1fr; }
-      .props-grid { grid-template-columns: 1fr; }
-      .prop-card.featured { grid-row: auto; }
-      #nosotros { grid-template-columns: 1fr; }
-      .about-visual { height: 300px; }
-      .contact-inner { grid-template-columns: 1fr; gap: 50px; }
-      .hero-stats { display: none; }
-      footer { flex-direction: column; gap: 12px; text-align: center; }
-    }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mapa con GPS</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css"/>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet.draw/1.0.4/leaflet.draw.css"/>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet.draw/1.0.4/leaflet.draw.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { height:100vh; overflow:hidden; font-family:'DM Sans',sans-serif; }
+  #map { width:100%; height:100vh; }
+  .leaflet-container { background:#0d1117; }
+  .leaflet-draw { display:none !important; }
+
+  .toolbar {
+    position:fixed; top:20px; left:50%; transform:translateX(-50%);
+    display:flex; gap:6px; z-index:1001;
+    background:rgba(5,8,20,0.93); backdrop-filter:blur(20px);
+    border:1px solid rgba(212,175,55,0.25); border-radius:14px;
+    padding:10px 14px;
+    box-shadow:0 8px 32px rgba(0,0,0,0.5);
+    flex-wrap:wrap; justify-content:center;
+    max-width:95vw;
+  }
+
+  .tool-btn {
+    display:flex; flex-direction:column; align-items:center; gap:3px;
+    padding:8px 11px; border:1px solid rgba(255,255,255,0.08);
+    border-radius:10px; cursor:pointer; background:transparent;
+    color:#aaa; font-family:'DM Sans',sans-serif; font-size:9px;
+    letter-spacing:0.5px; text-transform:uppercase; transition:all 0.2s;
+    min-width:50px;
+  }
+  .tool-btn:hover { border-color:rgba(212,175,55,0.4); color:#d4af37; background:rgba(212,175,55,0.06); }
+  .tool-btn.active { border-color:#d4af37; color:#d4af37; background:rgba(212,175,55,0.12); }
+  .tool-btn .icon { font-size:17px; }
+  .tool-btn.danger:hover { border-color:rgba(255,80,80,0.5); color:#ff5050; background:rgba(255,80,80,0.06); }
+  .tool-btn.green:hover  { border-color:rgba(34,197,94,0.5); color:#22c55e; background:rgba(34,197,94,0.06); }
+  .tool-btn.blue:hover   { border-color:rgba(99,179,237,0.5); color:#63b3ed; background:rgba(99,179,237,0.06); }
+
+  .tool-btn.street { border-color:rgba(34,197,94,0.25); color:#22c55e; }
+  .tool-btn.street:hover { border-color:#22c55e; background:rgba(34,197,94,0.08); }
+  .tool-btn.street.active { border-color:#22c55e; background:rgba(34,197,94,0.14); color:#22c55e; box-shadow:0 0 12px rgba(34,197,94,0.2); }
+
+  .sep { width:1px; background:rgba(255,255,255,0.08); margin:4px 2px; align-self:stretch; }
+
+  .color-wrap {
+    display:flex; flex-direction:column; align-items:center; gap:3px;
+    padding:6px 10px; border:1px solid rgba(255,255,255,0.08); border-radius:10px;
+  }
+  .color-wrap label { font-size:9px; text-transform:uppercase; letter-spacing:0.5px; color:#666; cursor:pointer; }
+  .color-wrap input[type=color] { width:28px; height:22px; border:none; border-radius:4px; cursor:pointer; padding:0; background:none; }
+
+  .size-wrap {
+    display:flex; flex-direction:column; align-items:center; gap:3px;
+    padding:6px 10px; border:1px solid rgba(255,255,255,0.08); border-radius:10px;
+  }
+  .size-wrap label { font-size:9px; text-transform:uppercase; letter-spacing:0.5px; color:#666; }
+  .size-wrap input[type=range] { width:55px; accent-color:#d4af37; cursor:pointer; }
+
+  .hint {
+    position:fixed; bottom:20px; left:50%; transform:translateX(-50%);
+    background:rgba(5,8,20,0.88); border:1px solid rgba(255,255,255,0.08);
+    border-radius:10px; padding:8px 18px; font-size:11px; z-index:1001;
+    pointer-events:none; white-space:nowrap; transition:all 0.3s; color:#aaa;
+  }
+  .hint.street-mode { border-color:rgba(34,197,94,0.4); color:#22c55e; background:rgba(5,20,10,0.9); }
+
+  .loading-indicator {
+    position:fixed; top:85px; left:50%; transform:translateX(-50%);
+    background:rgba(5,8,20,0.9); border:1px solid rgba(34,197,94,0.3);
+    border-radius:10px; padding:7px 16px; font-size:11px; color:#22c55e;
+    z-index:1002; display:none; align-items:center; gap:8px;
+  }
+  .loading-indicator.show { display:flex; }
+  .spinner { width:12px; height:12px; border:2px solid rgba(34,197,94,0.3);
+    border-top-color:#22c55e; border-radius:50%; animation:spin 0.7s linear infinite; }
+  @keyframes spin { to { transform:rotate(360deg); } }
+
+  .map-street-cursor { cursor:crosshair !important; }
+
+  .waypoint-dot {
+    width:10px; height:10px; background:#22c55e; border-radius:50%;
+    border:2px solid #fff; box-shadow:0 0 8px rgba(34,197,94,0.8);
+  }
+
+  /* ── Botón flotante Finalizar ── */
+  .finish-btn {
+    display:none; position:fixed; bottom:60px; right:24px;
+    background:linear-gradient(135deg,#22c55e,#16a34a);
+    border:none; border-radius:14px; padding:14px 22px;
+    color:#fff; font-family:'DM Sans',sans-serif; font-weight:700;
+    font-size:13px; letter-spacing:1px; text-transform:uppercase;
+    cursor:pointer; z-index:1002;
+    box-shadow:0 8px 28px rgba(34,197,94,0.45);
+    animation:bounceIn 0.3s ease;
+    align-items:center; gap:8px;
+    transition:transform 0.2s, box-shadow 0.2s;
+  }
+  .finish-btn.show { display:flex; }
+  .finish-btn:hover { transform:translateY(-2px); box-shadow:0 12px 36px rgba(34,197,94,0.55); }
+  @keyframes bounceIn {
+    from { transform:translateY(20px); opacity:0; }
+    to   { transform:translateY(0);    opacity:1; }
+  }
+
+  .esc-hint {
+    display:none; position:fixed; bottom:68px; right:210px;
+    background:rgba(5,8,20,0.88); border:1px solid rgba(255,255,255,0.1);
+    border-radius:10px; padding:10px 14px; color:#555; font-size:11px;
+    z-index:1002; pointer-events:none; align-items:center; gap:6px;
+    white-space:nowrap;
+  }
+  .esc-hint.show { display:flex; }
+
+  /* ── Panel de animación ── */
+  .anim-panel {
+    display:none; position:fixed; left:20px; bottom:60px;
+    background:rgba(5,8,20,0.95); backdrop-filter:blur(24px);
+    border:1px solid rgba(251,191,36,0.3); border-radius:18px;
+    padding:20px 20px 16px; width:280px; z-index:1002; color:#fff;
+    box-shadow:0 0 60px rgba(251,191,36,0.08), 0 20px 60px rgba(0,0,0,0.7);
+    animation:slideUp 0.3s ease;
+  }
+  .anim-panel.open { display:block; }
+  @keyframes slideUp { from{transform:translateY(20px);opacity:0} to{transform:translateY(0);opacity:1} }
+
+  .anim-title { font-size:10px; letter-spacing:3px; text-transform:uppercase; color:#fbbf24; margin-bottom:14px; display:flex; justify-content:space-between; align-items:center; }
+  .anim-close { background:none; border:none; color:#555; cursor:pointer; font-size:16px; padding:0; transition:color 0.2s; }
+  .anim-close:hover { color:#fff; }
+
+  /* Selector de capa */
+  .anim-select {
+    width:100%; background:rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.1);
+    border-radius:10px; padding:8px 12px; color:#ccc; font-size:11px;
+    font-family:'DM Sans',sans-serif; margin-bottom:14px; outline:none;
+    cursor:pointer;
+  }
+  .anim-select:focus { border-color:rgba(251,191,36,0.4); }
+
+  /* Progress */
+  .anim-prog-wrap { margin-bottom:12px; }
+  .anim-prog-bar { height:4px; background:rgba(255,255,255,0.08); border-radius:4px; overflow:hidden; cursor:pointer; }
+  .anim-prog-fill { height:100%; background:linear-gradient(90deg,#fbbf24,#f59e0b); width:0%; border-radius:4px; transition:width 0.06s linear; }
+  .anim-prog-labels { display:flex; justify-content:space-between; font-size:9px; color:#555; margin-top:4px; }
+
+  /* Controles */
+  .anim-controls { display:flex; align-items:center; gap:8px; margin-bottom:14px; }
+  .anim-btn {
+    flex:1; padding:9px 6px; border:1px solid rgba(255,255,255,0.08);
+    border-radius:10px; background:transparent; color:#aaa; cursor:pointer;
+    font-size:16px; transition:all 0.2s; display:flex; align-items:center; justify-content:center;
+  }
+  .anim-btn:hover { border-color:rgba(251,191,36,0.4); color:#fbbf24; background:rgba(251,191,36,0.06); }
+  .anim-btn.play-btn { flex:2; background:linear-gradient(135deg,#fbbf24,#f59e0b); border-color:transparent; color:#0d1117; font-size:14px; font-weight:700; font-family:'DM Sans',sans-serif; gap:6px; }
+  .anim-btn.play-btn:hover { box-shadow:0 6px 20px rgba(251,191,36,0.4); transform:translateY(-1px); }
+
+  /* Velocidad */
+  .anim-speed { display:flex; align-items:center; gap:10px; }
+  .anim-speed label { font-size:9px; text-transform:uppercase; letter-spacing:1px; color:#555; white-space:nowrap; }
+  .anim-speed input[type=range] { flex:1; accent-color:#fbbf24; cursor:pointer; }
+  .anim-speed-val { font-size:11px; color:#fbbf24; min-width:28px; text-align:right; }
+
+  /* Marcador del carro animado */
+  .anim-car {
+    width:32px; height:32px; background:#fbbf24; border-radius:50%;
+    display:flex; align-items:center; justify-content:center;
+    font-size:17px; border:2.5px solid #fff;
+    box-shadow:0 0 0 5px rgba(251,191,36,0.25), 0 0 20px rgba(251,191,36,0.8);
+    animation:carPulse 1.4s ease-in-out infinite;
+  }
+  @keyframes carPulse {
+    0%,100% { box-shadow:0 0 0 5px rgba(251,191,36,0.2),0 0 18px rgba(251,191,36,0.7); }
+    50%      { box-shadow:0 0 0 9px rgba(251,191,36,0.08),0 0 35px rgba(251,191,36,1); }
+  }
+
+  /* Modal guardar */
+  .modal-overlay {
+    display:none; position:fixed; inset:0; background:rgba(0,0,0,0.7);
+    z-index:2000; align-items:center; justify-content:center; backdrop-filter:blur(6px);
+  }
+  .modal-overlay.open { display:flex; }
+  .modal {
+    background:#0d1320; border:1px solid rgba(212,175,55,0.3);
+    border-radius:18px; padding:28px 24px; width:340px;
+    box-shadow:0 30px 80px rgba(0,0,0,0.8); animation:slideIn 0.25s ease;
+  }
+  @keyframes slideIn { from{transform:translateY(20px);opacity:0} to{transform:translateY(0);opacity:1} }
+  .modal h3 { font-family:serif; color:#d4af37; font-size:18px; margin-bottom:6px; }
+  .modal p  { color:#666; font-size:11px; margin-bottom:18px; }
+  .modal input[type=text] {
+    width:100%; background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.12);
+    border-radius:10px; padding:10px 14px; color:#fff; font-size:13px;
+    font-family:'DM Sans',sans-serif; margin-bottom:16px; outline:none; transition:border 0.2s;
+  }
+  .modal input[type=text]:focus { border-color:rgba(212,175,55,0.5); }
+  .modal-btns { display:flex; gap:10px; }
+  .modal-btn {
+    flex:1; padding:10px; border:none; border-radius:10px; cursor:pointer;
+    font-family:'DM Sans',sans-serif; font-size:12px; font-weight:600;
+    letter-spacing:1px; text-transform:uppercase; transition:all 0.2s;
+  }
+  .modal-btn.primary { background:linear-gradient(135deg,#d4af37,#c49a20); color:#0d1320; }
+  .modal-btn.primary:hover { box-shadow:0 6px 20px rgba(212,175,55,0.4); transform:translateY(-1px); }
+  .modal-btn.secondary { background:rgba(255,255,255,0.06); color:#aaa; border:1px solid rgba(255,255,255,0.1); }
+
+  /* Panel proyectos */
+  .projects-panel {
+    display:none; position:fixed; right:20px; top:50%; transform:translateY(-50%);
+    background:rgba(5,8,20,0.94); backdrop-filter:blur(24px);
+    border:1px solid rgba(212,175,55,0.25); border-radius:18px;
+    padding:20px; width:250px; z-index:1001; color:#fff;
+    box-shadow:0 20px 60px rgba(0,0,0,0.6); max-height:70vh; overflow-y:auto;
+  }
+  .projects-panel.open { display:block; }
+  .projects-panel h4 { color:#d4af37; font-size:12px; letter-spacing:2px; text-transform:uppercase; margin-bottom:14px; }
+  .project-item {
+    display:flex; align-items:center; justify-content:space-between;
+    padding:10px 12px; border-radius:10px; margin-bottom:8px;
+    background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.06); transition:all 0.2s;
+  }
+  .project-item:hover { border-color:rgba(212,175,55,0.3); background:rgba(212,175,55,0.05); }
+  .project-info { flex:1; min-width:0; }
+  .project-name { font-size:12px; color:#ddd; font-weight:600; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+  .project-meta { font-size:9px; color:#555; margin-top:2px; }
+  .project-actions { display:flex; gap:5px; flex-shrink:0; }
+  .pact-btn { width:26px; height:26px; border-radius:7px; border:none; cursor:pointer; display:flex; align-items:center; justify-content:center; font-size:13px; transition:all 0.2s; }
+  .pact-btn.load { background:rgba(99,179,237,0.15); } .pact-btn.load:hover { background:rgba(99,179,237,0.3); }
+  .pact-btn.dl   { background:rgba(34,197,94,0.15); }  .pact-btn.dl:hover   { background:rgba(34,197,94,0.3); }
+  .pact-btn.del  { background:rgba(255,80,80,0.12); }  .pact-btn.del:hover  { background:rgba(255,80,80,0.28); }
+  .empty-state { text-align:center; color:#444; font-size:11px; padding:20px 0; }
+
+  /* Toast */
+  .toast {
+    position:fixed; bottom:130px; left:50%; transform:translateX(-50%);
+    background:rgba(34,197,94,0.15); border:1px solid rgba(34,197,94,0.3);
+    border-radius:10px; padding:8px 18px; color:#22c55e; font-size:12px;
+    z-index:3000; pointer-events:none; opacity:0; transition:opacity 0.3s;
+  }
+  .toast.show { opacity:1; }
+</style>
 </head>
 <body>
+<div id="map"></div>
 
-  <!-- NAV -->
-  <nav id="navbar">
-    <a href="#hero" class="logo">Dzul<span>Realty</span></a>
-    <ul class="nav-links">
-      <li><a href="#servicios">Servicios</a></li>
-      <li><a href="#propiedades">Propiedades</a></li>
-      <li><a href="#nosotros">Nosotros</a></li>
-      <li><a href="#contacto" class="nav-cta">Contáctanos</a></li>
-    </ul>
-  </nav>
+<!-- Spinner carga OSRM -->
+<div class="loading-indicator" id="loadingIndicator">
+  <div class="spinner"></div>
+  Detectando calle…
+</div>
 
-  <!-- HERO -->
-  <section id="hero">
-    <div class="hero-bg"></div>
-    <div class="hero-grid-lines"></div>
+<!-- Toolbar -->
+<div class="toolbar">
+  <button class="tool-btn street" id="btn-street" onclick="setTool('street')">
+    <span class="icon">🛣️</span>Calle
+  </button>
 
-    <div class="hero-content">
-      <div class="hero-tag">Yucatán, México — Bienes Raíces</div>
-      <h1>Encuentra tu<br><em>tierra ideal</em><br>aquí.</h1>
-      <p class="hero-sub">Terrenos y lotes cuidadosamente seleccionados en las mejores ubicaciones de Yucatán. Inversiones que crecen con el tiempo.</p>
-      <div class="hero-actions">
-        <a href="#propiedades" class="btn-primary">Ver Propiedades</a>
-        <a href="#contacto" class="btn-ghost">
-          Hablar con un asesor
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-            <path d="M5 12h14M12 5l7 7-7 7"/>
-          </svg>
-        </a>
-      </div>
+  <div class="sep"></div>
+
+  <button class="tool-btn" id="btn-line" onclick="setTool('line')">
+    <span class="icon">✏️</span>Trazar
+  </button>
+  <button class="tool-btn" id="btn-polyline" onclick="setTool('polyline')">
+    <span class="icon">📐</span>Línea
+  </button>
+  <button class="tool-btn" id="btn-polygon" onclick="setTool('polygon')">
+    <span class="icon">⬡</span>Área
+  </button>
+  <button class="tool-btn" id="btn-circle" onclick="setTool('circle')">
+    <span class="icon">⭕</span>Círculo
+  </button>
+  <button class="tool-btn" id="btn-marker" onclick="setTool('marker')">
+    <span class="icon">📍</span>Pin
+  </button>
+
+  <div class="sep"></div>
+
+  <div class="color-wrap">
+    <label>Color</label>
+    <input type="color" id="colorPicker" value="#2563eb" onchange="updateColor()">
+  </div>
+  <div class="size-wrap">
+    <label>Grosor</label>
+    <input type="range" id="weightSlider" min="1" max="12" value="4" oninput="updateWeight()">
+  </div>
+
+  <div class="sep"></div>
+
+  <button class="tool-btn" onclick="undoLast()"><span class="icon">↩️</span>Deshacer</button>
+  <button class="tool-btn danger" onclick="clearAll()"><span class="icon">🗑️</span>Borrar</button>
+
+  <div class="sep"></div>
+
+  <button class="tool-btn" id="btn-animate" onclick="openAnimPanel()" style="border-color:rgba(251,191,36,0.25);color:#fbbf24"><span class="icon">▶️</span>Animar</button>
+
+  <div class="sep"></div>
+
+  <button class="tool-btn green" onclick="openSaveModal()"><span class="icon">💾</span>Guardar</button>
+  <button class="tool-btn blue"  onclick="toggleProjects()"><span class="icon">📂</span>Proyectos</button>
+  <button class="tool-btn"       onclick="exportGeoJSON()"><span class="icon">⬇️</span>Exportar</button>
+  <button class="tool-btn blue"  onclick="document.getElementById('importFile').click()"><span class="icon">⬆️</span>Importar</button>
+  <input type="file" id="importFile" accept=".geojson,.json" style="display:none" onchange="importGeoJSON(event)">
+</div>
+
+<!-- Panel proyectos -->
+<div class="projects-panel" id="projectsPanel">
+  <h4>📂 Mis Proyectos</h4>
+  <div id="projectsList"></div>
+</div>
+
+<!-- Panel de animación -->
+<div class="anim-panel" id="animPanel">
+  <div class="anim-title">
+    <span>▶ Animación de Recorrido</span>
+    <button class="anim-close" onclick="closeAnimPanel()">✕</button>
+  </div>
+  <select class="anim-select" id="animLayerSelect">
+    <option value="">— Selecciona una ruta —</option>
+  </select>
+  <div class="anim-prog-wrap">
+    <div class="anim-prog-bar" id="animProgBar" onclick="seekAnim(event)">
+      <div class="anim-prog-fill" id="animProgFill"></div>
     </div>
-
-    <div class="hero-stats">
-      <div class="stat">
-        <div class="stat-num">120+</div>
-        <div class="stat-label">Propiedades</div>
-      </div>
-      <div class="stat">
-        <div class="stat-num">15</div>
-        <div class="stat-label">Años de experiencia</div>
-      </div>
-      <div class="stat">
-        <div class="stat-num">98%</div>
-        <div class="stat-label">Clientes satisfechos</div>
-      </div>
+    <div class="anim-prog-labels">
+      <span id="animDistLabel">0 m</span>
+      <span id="animPctLabel">0%</span>
+      <span id="animTotalLabel">—</span>
     </div>
+  </div>
+  <div class="anim-controls">
+    <button class="anim-btn" onclick="animRestart()" title="Reiniciar">⏮</button>
+    <button class="anim-btn play-btn" id="animPlayBtn" onclick="toggleAnim()">▶ Reproducir</button>
+    <button class="anim-btn" onclick="animStop()" title="Detener">⏹</button>
+  </div>
+  <div class="anim-speed">
+    <label>Velocidad</label>
+    <input type="range" id="animSpeedSlider" min="1" max="10" value="4" oninput="updateAnimSpeed()">
+    <span class="anim-speed-val" id="animSpeedVal">4×</span>
+  </div>
+</div>
 
-    <div class="hero-scroll">
-      <div class="scroll-line"></div>
-      Scroll
+<!-- Modal guardar -->
+<div class="modal-overlay" id="saveModal">
+  <div class="modal">
+    <h3>💾 Guardar Proyecto</h3>
+    <p>Dale un nombre a tu trazado para encontrarlo después</p>
+    <input type="text" id="projectNameInput" placeholder="Ej: Ruta Ciudad Maderas" maxlength="40">
+    <div class="modal-btns">
+      <button class="modal-btn secondary" onclick="closeSaveModal()">Cancelar</button>
+      <button class="modal-btn primary"   onclick="saveProject()">Guardar</button>
     </div>
-  </section>
+  </div>
+</div>
 
-  <!-- SERVICIOS -->
-  <section id="servicios">
-    <div class="section-header reveal">
-      <div>
-        <div class="section-tag">Lo que ofrecemos</div>
-        <h2>Servicios<br><em>especializados</em></h2>
-      </div>
-      <p class="section-line">Asesoría integral para cada etapa de tu inversión en bienes raíces.</p>
-    </div>
+<!-- Botón flotante finalizar trazado de calle -->
+<div class="esc-hint" id="escHint">⌨️ <b style="color:#ccc">Enter</b> o <b style="color:#ccc">Espacio</b> para finalizar &nbsp;·&nbsp; <b style="color:#ccc">Esc</b> cancelar</div>
+<button class="finish-btn" id="finishBtn" onclick="finalizeStreetRoute()">
+  ✅ Finalizar Trazado
+</button>
 
-    <div class="services-grid">
-      <div class="service-card reveal">
-        <div class="service-num">01</div>
-        <svg class="service-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2">
-          <path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/>
-          <polyline points="9,22 9,12 15,12 15,22"/>
-        </svg>
-        <h3 class="service-title">Terrenos Residenciales</h3>
-        <p class="service-desc">Lotes en fraccionamientos privados y zonas de alta plusvalía. Perfectos para construir tu hogar soñado o proyecto habitacional.</p>
-      </div>
+<div class="toast" id="toast"></div>
+<div class="hint" id="hint">Selecciona una herramienta para comenzar a dibujar</div>
 
-      <div class="service-card reveal">
-        <div class="service-num">02</div>
-        <svg class="service-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2">
-          <rect x="2" y="7" width="20" height="14" rx="2"/>
-          <path d="M16 21V5a2 2 0 00-2-2h-4a2 2 0 00-2 2v16"/>
-        </svg>
-        <h3 class="service-title">Terrenos Comerciales</h3>
-        <p class="service-desc">Propiedades estratégicamente ubicadas para desarrollo comercial, ideal para quienes buscan expandir su negocio en zonas de crecimiento.</p>
-      </div>
+<script>
+// ── Mapa ───────────────────────────────────────────────────────────────────
+const map = L.map('map', { zoomControl:true, attributionControl:false });
+L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', { maxZoom:19 }).addTo(map);
+map.setView([21.07, -89.71], 11);
 
-      <div class="service-card reveal">
-        <div class="service-num">03</div>
-        <svg class="service-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2">
-          <circle cx="12" cy="12" r="10"/>
-          <path d="M12 8v4l3 3"/>
-        </svg>
-        <h3 class="service-title">Asesoría Legal</h3>
-        <p class="service-desc">Acompañamiento completo en el proceso legal: escrituración, trámites catastrales y verificación de documentos para una compra segura.</p>
-      </div>
-    </div>
-  </section>
+// ── Estado global ──────────────────────────────────────────────────────────
+let currentTool=null, currentColor='#2563eb', currentWeight=4;
+let drawnItems   = new L.FeatureGroup().addTo(map);
+let activeDrawer = null;
+let layersMeta   = [];
 
-  <!-- PROPIEDADES -->
-  <section id="propiedades">
-    <div class="reveal">
-      <div class="section-tag">En venta ahora</div>
-      <h2>Propiedades<br><em>destacadas</em></h2>
-    </div>
+// ── Estado modo CALLE ──────────────────────────────────────────────────────
+let streetWaypoints = [];
+let streetSegments  = [];
+let streetWpMarkers = [];
+let streetPreview   = null;
+let isRoutingBusy   = false;
 
-    <div class="props-grid">
-      <!-- Featured -->
-      <div class="prop-card featured reveal">
-        <div class="prop-img">
-          <svg class="prop-img-icon" width="80" height="80" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="0.8">
-            <path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/>
-          </svg>
-          <div class="prop-badge">Destacado</div>
-        </div>
-        <div class="prop-info">
-          <div class="prop-location">Mérida Norte · Yucatán</div>
-          <div class="prop-name">Lote Residencial Privada Las Palmas</div>
-          <div class="prop-details">
-            <span>750 m²</span>
-            <span>·</span>
-            <span>Urbanizado</span>
-            <span>·</span>
-            <span>Esquina</span>
-          </div>
-          <div class="prop-price">$1,250,000 MXN</div>
-        </div>
-      </div>
+const HINTS = {
+  line:    'Clic y arrastra para trazar libremente · Suelta para terminar',
+  polyline:'Clic para agregar puntos · Doble clic para terminar',
+  polygon: 'Clic para agregar vértices · Doble clic para cerrar el área',
+  circle:  'Clic en el centro y arrastra para definir el radio',
+  marker:  'Clic para colocar un marcador',
+  street:  '🛣️ Clic para trazar por calles · Botón verde o Enter para finalizar',
+};
 
-      <!-- Card 2 -->
-      <div class="prop-card reveal">
-        <div class="prop-img">
-          <svg class="prop-img-icon" width="50" height="50" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="0.8">
-            <path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/>
-          </svg>
-          <div class="prop-badge">Nuevo</div>
-        </div>
-        <div class="prop-info">
-          <div class="prop-location">Conkal · Yucatán</div>
-          <div class="prop-name">Terreno Comercial Avenida Principal</div>
-          <div class="prop-details">
-            <span>320 m²</span>
-            <span>·</span>
-            <span>Uso mixto</span>
-          </div>
-          <div class="prop-price">$890,000 MXN</div>
-        </div>
-      </div>
+function getStyle(){ return {color:currentColor, weight:currentWeight, opacity:0.9, fillColor:currentColor, fillOpacity:0.15}; }
 
-      <!-- Card 3 -->
-      <div class="prop-card reveal">
-        <div class="prop-img">
-          <svg class="prop-img-icon" width="50" height="50" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="0.8">
-            <path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/>
-          </svg>
-        </div>
-        <div class="prop-info">
-          <div class="prop-location">Progreso · Yucatán</div>
-          <div class="prop-name">Lote en Zona Costera</div>
-          <div class="prop-details">
-            <span>500 m²</span>
-            <span>·</span>
-            <span>Playa</span>
-          </div>
-          <div class="prop-price">$2,100,000 MXN</div>
-        </div>
-      </div>
+function setHint(txt, mode) {
+  const el = document.getElementById('hint');
+  el.textContent = txt;
+  el.className = 'hint' + (mode === 'street' ? ' street-mode' : '');
+}
 
-      <!-- Card 4 -->
-      <div class="prop-card reveal">
-        <div class="prop-img">
-          <svg class="prop-img-icon" width="50" height="50" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="0.8">
-            <path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/>
-          </svg>
-        </div>
-        <div class="prop-info">
-          <div class="prop-location">Hunucmá · Yucatán</div>
-          <div class="prop-name">Terreno Agrícola con Cenote</div>
-          <div class="prop-details">
-            <span>2,000 m²</span>
-            <span>·</span>
-            <span>Rural</span>
-          </div>
-          <div class="prop-price">$680,000 MXN</div>
-        </div>
-      </div>
-    </div>
-  </section>
+// ── Icono waypoint ─────────────────────────────────────────────────────────
+function wpIcon(first) {
+  return L.divIcon({
+    html:`<div class="waypoint-dot" style="background:${first?'#d4af37':'#22c55e'}"></div>`,
+    iconSize:[10,10], iconAnchor:[5,5], className:''
+  });
+}
 
-  <!-- NOSOTROS -->
-  <section id="nosotros">
-    <div class="about-visual reveal">
-      <div class="about-img-main">
-        <svg width="60" height="60" viewBox="0 0 24 24" fill="none" stroke="rgba(201,169,110,0.15)" stroke-width="0.8">
-          <path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/>
-          <polyline points="9,22 9,12 15,12 15,22"/>
-        </svg>
-      </div>
-      <div class="about-img-accent">
-        <div style="text-align:center;">
-          <div style="font-family:'Cormorant Garamond',serif; font-size:2.5rem; color:var(--champagne); font-weight:300;">15</div>
-          <div style="font-size:0.65rem; letter-spacing:0.2em; text-transform:uppercase; color:rgba(245,240,234,0.4);">años de experiencia</div>
-        </div>
-      </div>
-      <div class="about-accent-line"></div>
-    </div>
+// ── OSRM ───────────────────────────────────────────────────────────────────
+async function getStreetRoute(a, b) {
+  const url = `https://router.project-osrm.org/route/v1/driving/`
+    + `${a.lng},${a.lat};${b.lng},${b.lat}`
+    + `?overview=full&geometries=geojson`;
+  const res  = await fetch(url);
+  const data = await res.json();
+  if (data.code !== 'Ok' || !data.routes.length) return null;
+  return data.routes[0].geometry.coordinates.map(([lng,lat]) => [lat,lng]);
+}
 
-    <div class="about-text reveal">
-      <div class="section-tag">Quiénes somos</div>
-      <h2 style="margin-bottom:32px;">Más de una<br>década<br><em>construyendo</em><br>confianza.</h2>
-      <p>En Dzul Realty somos especialistas en bienes raíces en Yucatán. Conectamos a personas y familias con el terreno perfecto para sus sueños, con honestidad y transparencia en cada transacción.</p>
-      <p>Conocemos el mercado local como nadie: desde los fraccionamientos privados de Mérida Norte hasta los terrenos costeros de Progreso y las zonas rurales con cenotes.</p>
+// ── MODO CALLE ─────────────────────────────────────────────────────────────
+function startStreetMode() {
+  map.getContainer().classList.add('map-street-cursor');
+  map.on('click',     onStreetClick);
+  map.on('mousemove', onStreetMouseMove);
+  document.addEventListener('keydown', onStreetKey);
+}
 
-      <div class="about-values">
-        <div class="value-item">
-          <div class="value-title">Transparencia</div>
-          <div class="value-desc">Documentación clara y procesos sin sorpresas.</div>
-        </div>
-        <div class="value-item">
-          <div class="value-title">Experiencia</div>
-          <div class="value-desc">15 años conociendo el mercado yucateco.</div>
-        </div>
-        <div class="value-item">
-          <div class="value-title">Plusvalía</div>
-          <div class="value-desc">Propiedades seleccionadas por su potencial de crecimiento.</div>
-        </div>
-        <div class="value-item">
-          <div class="value-title">Acompañamiento</div>
-          <div class="value-desc">Te guiamos desde la búsqueda hasta la escritura.</div>
-        </div>
-      </div>
-    </div>
-  </section>
+function stopStreetMode() {
+  map.getContainer().classList.remove('map-street-cursor');
+  map.off('click',     onStreetClick);
+  map.off('mousemove', onStreetMouseMove);
+  document.removeEventListener('keydown', onStreetKey);
+  if (streetPreview) { map.removeLayer(streetPreview); streetPreview=null; }
+  document.getElementById('finishBtn').classList.remove('show');
+  document.getElementById('escHint').classList.remove('show');
+}
 
-  <!-- CONTACTO -->
-  <section id="contacto">
-    <div class="contact-bg"></div>
-    <div class="contact-inner">
-      <div class="contact-info reveal">
-        <div class="section-tag">Hablemos</div>
-        <h2 style="margin-bottom:24px;">¿Listo para<br><em>invertir?</em></h2>
-        <p>Cuéntanos qué tipo de terreno buscas y nuestros asesores te contactarán en menos de 24 horas para presentarte las mejores opciones.</p>
+function onStreetKey(e) {
+  if (e.key === 'Enter' || e.key === ' ') {
+    e.preventDefault();
+    if (streetSegments.length > 0) finalizeStreetRoute();
+  }
+  if (e.key === 'Escape') {
+    cancelStreetRoute();
+    setHint('🛣️ Trazado cancelado — clic para iniciar otro', 'street');
+  }
+  if (e.key === 'Backspace' || (e.key === 'z' && e.ctrlKey)) {
+    e.preventDefault();
+    undoLast();
+  }
+}
 
-        <div class="contact-items">
-          <div class="contact-item">
-            <svg class="contact-item-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-              <path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.8a19.79 19.79 0 01-3.07-8.68A2 2 0 012 0h3a2 2 0 012 1.72c.12.96.36 1.9.72 2.81a2 2 0 01-.45 2.11L6.09 7.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.91.36 1.85.6 2.81.72A2 2 0 0122 16.92z"/>
-            </svg>
-            <div>
-              <div class="contact-item-label">Teléfono</div>
-              <div class="contact-item-value">+52 (999) 000-0000</div>
-            </div>
-          </div>
+function onStreetMouseMove(e) {
+  if (streetWaypoints.length === 0) return;
+  const last = streetWaypoints[streetWaypoints.length-1];
+  if (streetPreview) map.removeLayer(streetPreview);
+  streetPreview = L.polyline([last, e.latlng], {
+    color:currentColor, weight:currentWeight, opacity:0.3, dashArray:'6,6'
+  }).addTo(map);
+}
 
-          <div class="contact-item">
-            <svg class="contact-item-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-              <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
-              <polyline points="22,6 12,13 2,6"/>
-            </svg>
-            <div>
-              <div class="contact-item-label">Correo</div>
-              <div class="contact-item-value">contacto@dzulrealty.com</div>
-            </div>
-          </div>
+async function onStreetClick(e) {
+  if (isRoutingBusy) return;
+  L.DomEvent.stopPropagation(e);
+  const latlng = e.latlng;
 
-          <div class="contact-item">
-            <svg class="contact-item-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-              <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/>
-              <circle cx="12" cy="10" r="3"/>
-            </svg>
-            <div>
-              <div class="contact-item-label">Ubicación</div>
-              <div class="contact-item-value">Mérida, Yucatán, México</div>
-            </div>
-          </div>
-        </div>
-      </div>
+  // Primer punto
+  if (streetWaypoints.length === 0) {
+    streetWaypoints.push(latlng);
+    const m = L.marker(latlng, { icon:wpIcon(true), zIndexOffset:1000 }).addTo(map);
+    streetWpMarkers.push(m);
+    setHint('🛣️ Sigue haciendo clic · Presiona el botón verde ✅ o Enter para finalizar', 'street');
+    return;
+  }
 
-      <div class="contact-form reveal">
-        <div class="form-group">
-          <label class="form-label">Nombre completo</label>
-          <input class="form-input" type="text" placeholder="Tu nombre" />
-        </div>
-        <div class="form-group">
-          <label class="form-label">Teléfono o correo</label>
-          <input class="form-input" type="text" placeholder="¿Cómo te contactamos?" />
-        </div>
-        <div class="form-group">
-          <label class="form-label">¿Qué estás buscando?</label>
-          <textarea class="form-textarea" placeholder="Cuéntanos el tipo de terreno, zona, presupuesto aproximado..."></textarea>
-        </div>
-        <button class="btn-primary" style="width:100%; border:none; cursor:pointer; margin-top:10px;">
-          Enviar mensaje
-        </button>
-      </div>
-    </div>
-  </section>
+  const prev = streetWaypoints[streetWaypoints.length-1];
+  isRoutingBusy = true;
+  document.getElementById('loadingIndicator').classList.add('show');
 
-  <!-- FOOTER -->
-  <footer>
-    <div class="footer-logo">Dzul<span>Realty</span></div>
-    <div class="footer-copy">© 2025 Dzul Realty · Mérida, Yucatán · Todos los derechos reservados</div>
-  </footer>
+  try {
+    const coords = await getStreetRoute(prev, latlng);
+    if (coords && coords.length > 1) {
+      const seg = L.polyline(coords, {
+        color:currentColor, weight:currentWeight,
+        opacity:0.9, lineCap:'round', lineJoin:'round'
+      }).addTo(map);
+      streetSegments.push(seg);
+    } else {
+      const seg = L.polyline([prev, latlng], {
+        color:currentColor, weight:currentWeight, opacity:0.7, dashArray:'5,5'
+      }).addTo(map);
+      streetSegments.push(seg);
+      showToast('⚠️ Sin calle detectada, línea recta');
+    }
+  } catch(err) {
+    const seg = L.polyline([prev, latlng], {
+      color:currentColor, weight:currentWeight, opacity:0.6, dashArray:'5,5'
+    }).addTo(map);
+    streetSegments.push(seg);
+    showToast('⚠️ Sin conexión al servidor de calles');
+  }
 
-  <script>
-    // Navbar scroll effect
-    const navbar = document.getElementById('navbar');
-    window.addEventListener('scroll', () => {
-      navbar.classList.toggle('scrolled', window.scrollY > 60);
-    });
+  streetWaypoints.push(latlng);
+  const m = L.marker(latlng, { icon:wpIcon(false), zIndexOffset:1000 }).addTo(map);
+  streetWpMarkers.push(m);
+  isRoutingBusy = false;
+  document.getElementById('loadingIndicator').classList.remove('show');
 
-    // Reveal on scroll
-    const reveals = document.querySelectorAll('.reveal');
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach((entry, i) => {
-        if (entry.isIntersecting) {
-          setTimeout(() => entry.target.classList.add('visible'), i * 80);
-          observer.unobserve(entry.target);
-        }
-      });
-    }, { threshold: 0.12 });
+  // Mostrar botón Finalizar desde el primer segmento
+  if (streetSegments.length >= 1) {
+    document.getElementById('finishBtn').classList.add('show');
+    document.getElementById('escHint').classList.add('show');
+  }
+}
 
-    reveals.forEach(el => observer.observe(el));
-  </script>
+function finalizeStreetRoute() {
+  if (streetSegments.length === 0) { cancelStreetRoute(); return; }
+
+  // Fusionar todos los segmentos en una sola polyline
+  const allCoords = [];
+  streetSegments.forEach(seg => {
+    const pts = seg.getLatLngs();
+    if (allCoords.length > 0) pts.shift();
+    allCoords.push(...pts);
+  });
+
+  // Limpiar waypoints y segmentos temporales
+  streetSegments.forEach(s => map.removeLayer(s));
+  streetWpMarkers.forEach(m => map.removeLayer(m));
+  if (streetPreview) { map.removeLayer(streetPreview); streetPreview=null; }
+  streetSegments=[]; streetWpMarkers=[]; streetWaypoints=[];
+
+  // Capa final
+  const finalLayer = L.polyline(allCoords, {
+    color:currentColor, weight:currentWeight,
+    opacity:0.95, lineCap:'round', lineJoin:'round'
+  }).addTo(map);
+  drawnItems.addLayer(finalLayer);
+  layersMeta.push({ id:L.stamp(finalLayer), color:currentColor, weight:currentWeight, type:'street' });
+
+  document.getElementById('finishBtn').classList.remove('show');
+  document.getElementById('escHint').classList.remove('show');
+  showToast('✅ Trazado guardado — puedes seguir trazando');
+  setHint('🛣️ Trazado finalizado · Clic para iniciar otro', 'street');
+}
+
+function cancelStreetRoute() {
+  streetSegments.forEach(s => map.removeLayer(s));
+  streetWpMarkers.forEach(m => map.removeLayer(m));
+  if (streetPreview) { map.removeLayer(streetPreview); streetPreview=null; }
+  streetSegments=[]; streetWpMarkers=[]; streetWaypoints=[];
+  document.getElementById('finishBtn').classList.remove('show');
+  document.getElementById('escHint').classList.remove('show');
+}
+
+// ── Activar herramienta ────────────────────────────────────────────────────
+function setTool(tool) {
+  if (activeDrawer)             { activeDrawer.disable(); activeDrawer=null; }
+  if (currentTool === 'line')   stopFreehand();
+  if (currentTool === 'street') { stopStreetMode(); cancelStreetRoute(); }
+
+  if (currentTool === tool) {
+    currentTool=null;
+    document.querySelectorAll('.tool-btn').forEach(b=>b.classList.remove('active'));
+    setHint('Selecciona una herramienta para comenzar a dibujar');
+    return;
+  }
+
+  currentTool=tool;
+  document.querySelectorAll('.tool-btn').forEach(b=>b.classList.remove('active'));
+  document.getElementById('btn-'+tool).classList.add('active');
+  setHint(HINTS[tool], tool==='street'?'street':'');
+
+  const style = getStyle();
+  if (tool==='street')   { startStreetMode();  return; }
+  if (tool==='line')     { startFreehand();     return; }
+  if (tool==='polyline') activeDrawer = new L.Draw.Polyline(map, { shapeOptions:{color:style.color,weight:style.weight,opacity:style.opacity} });
+  if (tool==='polygon')  activeDrawer = new L.Draw.Polygon(map,  { shapeOptions:{color:style.color,weight:style.weight,fillColor:style.fillColor,fillOpacity:style.fillOpacity} });
+  if (tool==='circle')   activeDrawer = new L.Draw.Circle(map,   { shapeOptions:{color:style.color,weight:style.weight,fillColor:style.fillColor,fillOpacity:style.fillOpacity} });
+  if (tool==='marker')   activeDrawer = new L.Draw.Marker(map);
+  if (activeDrawer) activeDrawer.enable();
+}
+
+// ── Freehand ───────────────────────────────────────────────────────────────
+let freehandActive=false, freehandPts=[], freehandLine=null;
+function startFreehand() {
+  map.dragging.disable();
+  map.on('mousedown',onFreeStart); map.on('mousemove',onFreeMove); map.on('mouseup',onFreeEnd);
+}
+function stopFreehand() {
+  map.dragging.enable();
+  map.off('mousedown',onFreeStart); map.off('mousemove',onFreeMove); map.off('mouseup',onFreeEnd);
+}
+function onFreeStart(e) { freehandActive=true; freehandPts=[e.latlng]; freehandLine=L.polyline([e.latlng],{color:currentColor,weight:currentWeight,opacity:0.9}).addTo(map); }
+function onFreeMove(e)  { if(!freehandActive||!freehandLine) return; freehandPts.push(e.latlng); freehandLine.setLatLngs(freehandPts); }
+function onFreeEnd()    {
+  if(!freehandActive) return; freehandActive=false;
+  if(freehandLine){ drawnItems.addLayer(freehandLine); layersMeta.push({id:L.stamp(freehandLine),color:currentColor,weight:currentWeight,type:'freehand'}); freehandLine=null; }
+  freehandPts=[];
+}
+
+map.on(L.Draw.Event.CREATED, function(e){
+  const layer=e.layer;
+  if(layer.setStyle) layer.setStyle(getStyle());
+  drawnItems.addLayer(layer);
+  layersMeta.push({id:L.stamp(layer),color:currentColor,weight:currentWeight,type:e.layerType});
+  if(activeDrawer) setTimeout(()=>{ if(currentTool) setTool(currentTool); },50);
+});
+
+function updateColor()  { currentColor=document.getElementById('colorPicker').value; }
+function updateWeight() { currentWeight=parseInt(document.getElementById('weightSlider').value); }
+
+function undoLast() {
+  if (currentTool==='street' && streetSegments.length>0) {
+    const lastSeg=streetSegments.pop(); map.removeLayer(lastSeg);
+    const lastWp=streetWpMarkers.pop();  map.removeLayer(lastWp);
+    streetWaypoints.pop();
+    if (streetSegments.length===0) {
+      document.getElementById('finishBtn').classList.remove('show');
+      document.getElementById('escHint').classList.remove('show');
+    }
+    showToast('↩️ Último segmento eliminado');
+    return;
+  }
+  const layers=drawnItems.getLayers();
+  if(layers.length>0){ const last=layers[layers.length-1]; layersMeta=layersMeta.filter(m=>m.id!==L.stamp(last)); drawnItems.removeLayer(last); }
+}
+
+function clearAll() {
+  if(activeDrawer){activeDrawer.disable();activeDrawer=null;}
+  stopFreehand(); stopStreetMode(); cancelStreetRoute();
+  currentTool=null;
+  document.querySelectorAll('.tool-btn').forEach(b=>b.classList.remove('active'));
+  drawnItems.clearLayers(); layersMeta=[];
+  setHint('Selecciona una herramienta para comenzar a dibujar');
+  map.dragging.enable();
+}
+
+// ── GeoJSON ────────────────────────────────────────────────────────────────
+function getGeoJSON() {
+  const features=[];
+  drawnItems.eachLayer(layer=>{
+    const id=L.stamp(layer); const meta=layersMeta.find(m=>m.id===id)||{};
+    let f;
+    if(layer instanceof L.Circle){ f={type:'Feature',geometry:{type:'Point',coordinates:[layer.getLatLng().lng,layer.getLatLng().lat]},properties:{type:'circle',radius:layer.getRadius(),color:meta.color,weight:meta.weight}}; }
+    else if(layer instanceof L.Marker){ f={type:'Feature',geometry:{type:'Point',coordinates:[layer.getLatLng().lng,layer.getLatLng().lat]},properties:{type:'marker',color:meta.color}}; }
+    else if(layer.toGeoJSON){ f=layer.toGeoJSON(); f.properties=f.properties||{}; f.properties.color=meta.color; f.properties.weight=meta.weight; f.properties.type=meta.type||'polyline'; }
+    if(f) features.push(f);
+  });
+  return {type:'FeatureCollection',features};
+}
+
+function loadGeoJSON(geojson) {
+  drawnItems.clearLayers(); layersMeta=[];
+  (geojson.features||[]).forEach(f=>{
+    const p=f.properties||{}; const color=p.color||'#2563eb'; const weight=p.weight||4;
+    const style={color,weight,opacity:0.9,fillColor:color,fillOpacity:0.15};
+    let layer;
+    if(p.type==='circle'){ const[lng,lat]=f.geometry.coordinates; layer=L.circle([lat,lng],{radius:p.radius,...style}); }
+    else if(p.type==='marker'){ const[lng,lat]=f.geometry.coordinates; layer=L.marker([lat,lng]); }
+    else{ layer=L.geoJSON(f,{style:()=>style}).getLayers()[0]; }
+    if(layer){ drawnItems.addLayer(layer); layersMeta.push({id:L.stamp(layer),color,weight,type:p.type}); }
+  });
+  if(drawnItems.getLayers().length>0) map.fitBounds(drawnItems.getBounds(),{padding:[60,60]});
+}
+
+function exportGeoJSON() {
+  if(drawnItems.getLayers().length===0){showToast('⚠️ No hay nada para exportar');return;}
+  const blob=new Blob([JSON.stringify(getGeoJSON(),null,2)],{type:'application/json'});
+  const a=document.createElement('a'); a.href=URL.createObjectURL(blob); a.download='trazado-'+Date.now()+'.geojson'; a.click();
+  showToast('⬇️ Archivo GeoJSON exportado');
+}
+
+function importGeoJSON(e) {
+  const file=e.target.files[0]; if(!file) return;
+  const reader=new FileReader();
+  reader.onload=ev=>{ try{ clearAll(); loadGeoJSON(JSON.parse(ev.target.result)); showToast('⬆️ Importado: '+file.name); }catch(err){showToast('❌ Archivo inválido');} };
+  reader.readAsText(file); e.target.value='';
+}
+
+// ── Guardar / Proyectos ────────────────────────────────────────────────────
+function openSaveModal() { if(drawnItems.getLayers().length===0){showToast('⚠️ No hay nada para guardar');return;} document.getElementById('projectNameInput').value=''; document.getElementById('saveModal').classList.add('open'); setTimeout(()=>document.getElementById('projectNameInput').focus(),100); }
+function closeSaveModal() { document.getElementById('saveModal').classList.remove('open'); }
+function saveProject() {
+  const name=document.getElementById('projectNameInput').value.trim(); if(!name){document.getElementById('projectNameInput').focus();return;}
+  const projects=getProjects(); const id=Date.now().toString();
+  projects[id]={id,name,date:new Date().toLocaleDateString('es-MX',{day:'2-digit',month:'short',year:'numeric'}),geojson:getGeoJSON(),view:{center:map.getCenter(),zoom:map.getZoom()}};
+  localStorage.setItem('mapProjects',JSON.stringify(projects));
+  closeSaveModal(); showToast('✅ Guardado: "'+name+'"'); renderProjectsList();
+}
+function getProjects() { try{return JSON.parse(localStorage.getItem('mapProjects'))||{};}catch(e){return{};} }
+function loadProject(id) { const p=getProjects()[id]; if(!p) return; clearAll(); loadGeoJSON(p.geojson); showToast('📂 Cargado: '+p.name); }
+function deleteProject(id) { const projects=getProjects(); const name=projects[id]?.name; delete projects[id]; localStorage.setItem('mapProjects',JSON.stringify(projects)); renderProjectsList(); showToast('🗑️ Eliminado: '+name); }
+function downloadProject(id) { const p=getProjects()[id]; if(!p) return; const blob=new Blob([JSON.stringify(p.geojson,null,2)],{type:'application/json'}); const a=document.createElement('a'); a.href=URL.createObjectURL(blob); a.download=p.name.replace(/\s+/g,'-')+'.geojson'; a.click(); showToast('⬇️ Descargado: '+p.name); }
+function toggleProjects() { const panel=document.getElementById('projectsPanel'); panel.classList.toggle('open'); if(panel.classList.contains('open')) renderProjectsList(); }
+function renderProjectsList() {
+  const projects=getProjects(); const list=document.getElementById('projectsList'); const keys=Object.keys(projects).sort((a,b)=>b-a);
+  if(keys.length===0){list.innerHTML='<div class="empty-state">Sin proyectos guardados aún</div>';return;}
+  list.innerHTML=keys.map(id=>{ const p=projects[id]; return `<div class="project-item"><div class="project-info"><div class="project-name">${p.name}</div><div class="project-meta">${p.date} · ${p.geojson.features.length} elemento(s)</div></div><div class="project-actions"><button class="pact-btn load" onclick="loadProject('${id}')" title="Cargar">📂</button><button class="pact-btn dl" onclick="downloadProject('${id}')" title="Descargar">⬇️</button><button class="pact-btn del" onclick="deleteProject('${id}')" title="Eliminar">🗑️</button></div></div>`; }).join('');
+}
+
+// ── Toast ──────────────────────────────────────────────────────────────────
+let toastTimer;
+function showToast(msg) { const t=document.getElementById('toast'); t.textContent=msg; t.classList.add('show'); clearTimeout(toastTimer); toastTimer=setTimeout(()=>t.classList.remove('show'),2800); }
+
+// ── ANIMACIÓN DE RECORRIDO ─────────────────────────────────────────────────
+let animLayers      = [];   // capas seleccionables
+let animCoords      = [];   // coords aplanadas de la ruta seleccionada
+let animCarMarker   = null;
+let animTrailLine   = null;
+let animTimer       = null;
+let animRunning     = false;
+let animPtIdx       = 0;
+let animSubT        = 0;
+let animSpeed       = 4;    // multiplicador
+const ANIM_SUBSTEPS = 60;
+const ANIM_BASE_DELAY = 18; // ms base (speed 1)
+
+function getAnimDelay() { return Math.max(4, Math.round(ANIM_BASE_DELAY / animSpeed)); }
+
+function lerp(a,b,t){ return [a[0]+(b[0]-a[0])*t, a[1]+(b[1]-a[1])*t]; }
+
+// Extraer coordenadas planas de una polyline/GeoJSON layer
+function extractCoords(layer) {
+  if (!layer) return [];
+  const lls = layer.getLatLngs ? layer.getLatLngs() : null;
+  if (!lls) return [];
+  // puede ser array plano o array de arrays (multipolyline)
+  const flat = lls[0] && Array.isArray(lls[0]) ? lls.flat(2) : lls.flat(1);
+  return flat.map(ll => [ll.lat, ll.lng]);
+}
+
+// Calcular distancia total en metros
+function totalDist(coords) {
+  let d=0;
+  for(let i=1;i<coords.length;i++){
+    const R=6371000, dLat=(coords[i][0]-coords[i-1][0])*Math.PI/180, dLng=(coords[i][1]-coords[i-1][1])*Math.PI/180;
+    const a=Math.sin(dLat/2)**2+Math.cos(coords[i-1][0]*Math.PI/180)*Math.cos(coords[i][0]*Math.PI/180)*Math.sin(dLng/2)**2;
+    d+=R*2*Math.atan2(Math.sqrt(a),Math.sqrt(1-a));
+  }
+  return d;
+}
+
+function fmtDist(m){ return m<1000 ? Math.round(m)+' m' : (m/1000).toFixed(1)+' km'; }
+
+// Abrir panel y poblar selector
+function openAnimPanel() {
+  populateAnimSelect();
+  document.getElementById('animPanel').classList.add('open');
+}
+function closeAnimPanel() {
+  animStop();
+  document.getElementById('animPanel').classList.remove('open');
+}
+
+function populateAnimSelect() {
+  const sel = document.getElementById('animLayerSelect');
+  sel.innerHTML = '<option value="">— Selecciona una ruta —</option>';
+  animLayers = [];
+  let idx = 0;
+  drawnItems.eachLayer(layer => {
+    if (layer instanceof L.Polyline && !(layer instanceof L.Polygon)) {
+      const meta  = layersMeta.find(m => m.id === L.stamp(layer)) || {};
+      const type  = meta.type || 'ruta';
+      const coords = extractCoords(layer);
+      if (coords.length < 2) return;
+      const dist  = fmtDist(totalDist(coords));
+      const label = `Ruta ${idx+1} · ${type} · ${dist}`;
+      sel.innerHTML += `<option value="${idx}">${label}</option>`;
+      animLayers.push(layer);
+      idx++;
+    }
+  });
+  if (animLayers.length === 1) {
+    sel.value = '0';
+    selectAnimLayer(0);
+  }
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  document.getElementById('animLayerSelect').addEventListener('change', function(){
+    if (this.value !== '') selectAnimLayer(parseInt(this.value));
+  });
+});
+
+function selectAnimLayer(idx) {
+  animStop();
+  const layer = animLayers[idx];
+  if (!layer) return;
+  animCoords = extractCoords(layer);
+  const dist = totalDist(animCoords);
+  document.getElementById('animTotalLabel').textContent = fmtDist(dist);
+  document.getElementById('animDistLabel').textContent  = '0 m';
+  document.getElementById('animPctLabel').textContent   = '0%';
+  document.getElementById('animProgFill').style.width   = '0%';
+  // Centrar mapa en la ruta
+  if (layer.getBounds) map.fitBounds(layer.getBounds(), {padding:[80,80], animate:true, duration:0.8});
+}
+
+// Iniciar / pausar
+function toggleAnim() {
+  const sel = document.getElementById('animLayerSelect');
+  if (sel.value === '' && animLayers.length > 0) { sel.value='0'; selectAnimLayer(0); }
+  if (animCoords.length < 2) { showToast('⚠️ Selecciona una ruta primero'); return; }
+
+  if (animRunning) {
+    pauseAnim();
+  } else {
+    if (animPtIdx >= animCoords.length - 1) animReset();
+    playAnim();
+  }
+}
+
+function playAnim() {
+  animRunning = true;
+  document.getElementById('animPlayBtn').textContent = '⏸ Pausar';
+
+  // Crear/limpiar marcador carro
+  if (!animCarMarker) {
+    const carIcon = L.divIcon({ html:'<div class="anim-car">🚗</div>', iconSize:[32,32], iconAnchor:[16,16], className:'' });
+    animCarMarker = L.marker(animCoords[0], { icon:carIcon, zIndexOffset:2000 }).addTo(map);
+  }
+  // Línea de trail
+  if (!animTrailLine) {
+    animTrailLine = L.polyline([animCoords[0]], {
+      color:'#fbbf24', weight:4, opacity:0.6, lineCap:'round', lineJoin:'round',
+      dashArray: null
+    }).addTo(map);
+  }
+  stepAnim();
+}
+
+function pauseAnim() {
+  animRunning = false;
+  clearTimeout(animTimer);
+  document.getElementById('animPlayBtn').textContent = '▶ Continuar';
+}
+
+function animStop() {
+  animRunning = false;
+  clearTimeout(animTimer);
+  animReset();
+}
+
+function animReset() {
+  animPtIdx = 0; animSubT = 0;
+  if (animCarMarker) { map.removeLayer(animCarMarker); animCarMarker=null; }
+  if (animTrailLine) { map.removeLayer(animTrailLine); animTrailLine=null; }
+  document.getElementById('animPlayBtn').textContent = '▶ Reproducir';
+  document.getElementById('animProgFill').style.width = '0%';
+  document.getElementById('animDistLabel').textContent = '0 m';
+  document.getElementById('animPctLabel').textContent  = '0%';
+}
+
+function animRestart() {
+  animStop();
+  if (animCoords.length >= 2) setTimeout(playAnim, 100);
+}
+
+function stepAnim() {
+  if (!animRunning) return;
+  if (animPtIdx >= animCoords.length - 1) {
+    // Llegó al final
+    animRunning = false;
+    document.getElementById('animPlayBtn').textContent = '↺ Repetir';
+    document.getElementById('animProgFill').style.width = '100%';
+    document.getElementById('animPctLabel').textContent  = '100%';
+    const dist = totalDist(animCoords);
+    document.getElementById('animDistLabel').textContent = fmtDist(dist);
+    showToast('🏁 ¡Recorrido completado!');
+    // Zoom out al final
+    const layer = animLayers[parseInt(document.getElementById('animLayerSelect').value||'0')];
+    if (layer && layer.getBounds) setTimeout(()=>map.fitBounds(layer.getBounds(),{padding:[80,80],animate:true,duration:1.2}), 400);
+    return;
+  }
+
+  const pos = lerp(animCoords[animPtIdx], animCoords[animPtIdx+1], animSubT/ANIM_SUBSTEPS);
+
+  animCarMarker.setLatLng(pos);
+  animTrailLine.addLatLng(pos);
+  map.panTo(pos, { animate:true, duration:0.12, easeLinearity:1 });
+
+  // Progreso
+  const total  = (animCoords.length-1)*ANIM_SUBSTEPS;
+  const cur    = animPtIdx*ANIM_SUBSTEPS+animSubT;
+  const pct    = Math.round((cur/total)*100);
+  document.getElementById('animProgFill').style.width = pct+'%';
+  document.getElementById('animPctLabel').textContent  = pct+'%';
+  // distancia recorrida aprox
+  const coveredCoords = animCoords.slice(0, animPtIdx+1);
+  document.getElementById('animDistLabel').textContent = fmtDist(totalDist(coveredCoords));
+
+  animSubT++;
+  if (animSubT >= ANIM_SUBSTEPS) { animSubT=0; animPtIdx++; }
+  animTimer = setTimeout(stepAnim, getAnimDelay());
+}
+
+// Seek haciendo clic en la barra
+function seekAnim(e) {
+  if (animCoords.length < 2) return;
+  const bar  = document.getElementById('animProgBar');
+  const rect = bar.getBoundingClientRect();
+  const pct  = Math.max(0, Math.min(1, (e.clientX - rect.left) / rect.width));
+  const totalSteps = (animCoords.length-1)*ANIM_SUBSTEPS;
+  const targetStep = Math.floor(pct * totalSteps);
+  animPtIdx = Math.floor(targetStep / ANIM_SUBSTEPS);
+  animSubT  = targetStep % ANIM_SUBSTEPS;
+
+  if (animPtIdx >= animCoords.length-1) { animPtIdx = animCoords.length-2; animSubT = ANIM_SUBSTEPS-1; }
+  const pos = lerp(animCoords[animPtIdx], animCoords[animPtIdx+1], animSubT/ANIM_SUBSTEPS);
+
+  // Resetear trail hasta ese punto
+  if (animTrailLine) { map.removeLayer(animTrailLine); animTrailLine=null; }
+  const trailPts = animCoords.slice(0, animPtIdx+1); trailPts.push(pos);
+  animTrailLine = L.polyline(trailPts, { color:'#fbbf24', weight:4, opacity:0.6, lineCap:'round', lineJoin:'round' }).addTo(map);
+
+  if (!animCarMarker) {
+    const carIcon = L.divIcon({ html:'<div class="anim-car">🚗</div>', iconSize:[32,32], iconAnchor:[16,16], className:'' });
+    animCarMarker = L.marker(pos, { icon:carIcon, zIndexOffset:2000 }).addTo(map);
+  } else { animCarMarker.setLatLng(pos); }
+  map.panTo(pos);
+  document.getElementById('animProgFill').style.width = (pct*100)+'%';
+  document.getElementById('animPctLabel').textContent  = Math.round(pct*100)+'%';
+}
+
+function updateAnimSpeed() {
+  animSpeed = parseInt(document.getElementById('animSpeedSlider').value);
+  document.getElementById('animSpeedVal').textContent = animSpeed+'×';
+}
+
+// Auto-abrir panel al finalizar una ruta de calle
+const _origFinalize = finalizeStreetRoute;
+window.finalizeStreetRoute = function() {
+  _origFinalize();
+  setTimeout(() => {
+    populateAnimSelect();
+    document.getElementById('animPanel').classList.add('open');
+    showToast('▶ ¡Ruta lista! Pulsa Reproducir para animarla');
+  }, 200);
+};
+
+document.getElementById('animLayerSelect').addEventListener('change', function(){
+  if (this.value !== '') selectAnimLayer(parseInt(this.value));
+});
+
+document.getElementById('saveModal').addEventListener('click',e=>{ if(e.target===e.currentTarget) closeSaveModal(); });
+</script>
 </body>
 </html>
